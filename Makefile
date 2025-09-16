@@ -33,7 +33,7 @@ OBJ		= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 MAKE_QUIET	= --no-print-directory
-SHELL_QUIET	= > /dev/null
+SHELL_QUIET	= $(if $(DEBUG),,> /dev/null)
 MAKE_LIB	= make -C
 CMAKE_LIB	= cmake
 
@@ -58,7 +58,7 @@ INC			= -I. -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX42_DIR)/include
 LIBFT		= -L$(LIBFT_DIR) -lft
 MLX42		= -L$(MLX42_DIR)/build -lmlx42
 GLFW_42		= -lglfw
-GLFW_MAC	= -lglfw -L"/usr/local/Cellar/glfw/3.4/lib/" -framework Cocoa -framework OpenGL -framework IOKit
+GLFW_MAC	= $(shell pkg-config --cflags --libs glfw3) -framework Cocoa -framework OpenGL -framework IOKit
 LIBS		= $(LIBFT) $(MLX42) $(GLFW_MAC)
 
 # <<<<<<< MAIN TARGETS >>>>>>>
