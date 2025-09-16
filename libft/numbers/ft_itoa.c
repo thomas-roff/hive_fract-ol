@@ -14,9 +14,6 @@
 
 static void	ft_nbrcpy(char *num, int n, int sign, int nlen)
 {
-	int	power;
-
-	power = 1;
 	if (sign == -1)
 		num[0] = '-';
 	nlen -= 1;

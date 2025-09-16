@@ -57,8 +57,9 @@ MLX42_A		= $(MLX42_DIR)/build/libmlx42.a
 INC			= -I. -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX42_DIR)/include
 LIBFT		= -L$(LIBFT_DIR) -lft
 MLX42		= -L$(MLX42_DIR)/build -lmlx42
-GLFW_OPENGL	= -lglfw
-LIBS		= $(LIBFT) $(MLX42) $(GLFW_OPENGL)
+GLFW_42		= -lglfw
+GLFW_MAC	= -lglfw -L"/usr/local/Cellar/glfw/3.4/lib/" -framework Cocoa -framework OpenGL -framework IOKit
+LIBS		= $(LIBFT) $(MLX42) $(GLFW_MAC)
 
 # <<<<<<< MAIN TARGETS >>>>>>>
 
