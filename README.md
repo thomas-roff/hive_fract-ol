@@ -1,2 +1,2 @@
-# hive_so_long
-so_long project for Hive, Helsinki
+# hive_fract-ol
+fract-ol project for Hive, Helsinki
