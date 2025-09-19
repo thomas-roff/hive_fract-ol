@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
+# include <stdint.h>
 
 // CODES FOR ERROR TRACKING
 // SUCCESSFUL EXECUTION
@@ -35,5 +36,14 @@
 # define HEIGHT 512
 
 // FRACT-OL
+typedef struct fract_s
+{
+	mlx_image_t	*image;
+	int			sq_x;
+	int			sq_y;
+	int			sq_w;
+	int			sq_h;
+	uint32_t	color;
+}	fract_t;
 
 #endif

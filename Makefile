@@ -59,7 +59,7 @@ LIBFT		= -L$(LIBFT_DIR) -lft
 MLX42		= -L$(MLX42_DIR)/build -lmlx42
 GLFW_42		= -lglfw
 GLFW_MAC	= $(shell pkg-config --cflags --libs glfw3) -framework Cocoa -framework OpenGL -framework IOKit
-LIBS		= $(LIBFT) $(MLX42) $(GLFW_MAC)
+LIBS		= $(LIBFT) $(MLX42) $(GLFW_42)
 
 # <<<<<<< MAIN TARGETS >>>>>>>
 

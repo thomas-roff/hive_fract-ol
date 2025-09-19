@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static mlx_image_t *image;
+static fract_t frl;
 
 static void ft_error(void)
 {
@@ -30,39 +30,98 @@ static void	commands(void *param)
 	window = param;
 	if (mlx_is_key_down(window, MLX_KEY_ESCAPE))
 		mlx_close_window(window);
-}
-
-static void	navigation(void *param)
-{
-	mlx_t	*window;
-
-	window = param;
 	if (mlx_is_key_down(window, MLX_KEY_UP))
-		image->instances[0].y -= 5;
+	{
+		frl.image->instances[0].y -= 5;
+		// frl.sq_y -= 5;
+	}
 	if (mlx_is_key_down(window, MLX_KEY_DOWN))
-		image->instances[0].y += 5;
+	{
+		frl.image->instances[0].y += 5;
+		// frl.sq_y += 5;
+	}
 	if (mlx_is_key_down(window, MLX_KEY_LEFT))
-		image->instances[0].x -= 5;
+	{
+		frl.image->instances[0].x -= 5;
+		// frl.sq_x -= 5;
+	}
 	if (mlx_is_key_down(window, MLX_KEY_RIGHT))
-		image->instances[0].x += 5;
+	{
+		frl.image->instances[0].x += 5;
+		// frl.sq_x += 5;
+	}
 }
 
-void draw_rectangle(mlx_image_t* image, int x, int y, int width, int height, uint32_t color)
+static void	clear_image(mlx_image_t *image)
+{
+	unsigned int	i;
+	unsigned int	j;
+
+	i = 0;
+	while (i < image->height)
+	{
+		j = 0;
+		while (j < image->width)
+		{
+			mlx_put_pixel(image, j, i, 0x00000000);
+			j++;
+		}
+		i++;
+	}
+}
+
+void draw_rectangle(mlx_image_t *image, int width, int height, uint32_t color)
 {
 	int	i;
 	int	j;
 
 	i = 0;
+	clear_image(image);
 	while (i < height)
 	{
 		j = 0;
 		while (j < width)
 		{
-			mlx_put_pixel(image, x + i, y + j, color);
+			mlx_put_pixel(image, j, i, color);
 			j++;
 		}
 		i++;
 	}
+}
+
+static void	scrolling(double xdelta, double ydelta, void *param)
+{
+	mlx_t	*window;
+	int		old_w;
+	int		old_h;
+
+	(void)xdelta;
+	window = param;
+	old_w = frl.sq_w;
+	old_h = frl.sq_h;
+	if (ydelta > 0)
+	{
+		frl.sq_w = (int)(frl.sq_w * 1.25);
+		frl.sq_h = (int)(frl.sq_h * 1.25);
+	}
+	else if (ydelta < 0)
+	{
+		frl.sq_w = (int)(frl.sq_w * 0.8);
+		frl.sq_h = (int)(frl.sq_h * 0.8);
+	}
+	else
+		return ;
+	if (frl.sq_w < 10)
+		frl.sq_w = 10;
+	if (frl.sq_h < 10)
+		frl.sq_h = 10;
+	if (frl.sq_w > 512)
+		frl.sq_w = 512;
+	if (frl.sq_h > 512)
+		frl.sq_h = 512;
+	draw_rectangle(frl.image, frl.sq_w, frl.sq_h, frl.color);
+	frl.image->instances[0].x += ((old_w - frl.sq_w) / 2);
+	frl.image->instances[0].y += ((old_h - frl.sq_h) / 2);
 }
 
 static void	init_window(mlx_t **window, mlx_image_t **image)
@@ -70,8 +129,8 @@ static void	init_window(mlx_t **window, mlx_image_t **image)
 	*window = mlx_init(WIDTH, HEIGHT, "Fract-ol", TRUE);
 	if (!*window)
 		ft_error();
-	*image = mlx_new_image(*window, 128, 128);
-	if (!*image || mlx_image_to_window(*window, *image, 0, 0) < 0)
+	*image = mlx_new_image(*window, WIDTH, HEIGHT);
+	if (!*image || mlx_image_to_window(*window, *image, frl.sq_x, frl.sq_y) < 0)
 	{
 		mlx_close_window(*window);
 		ft_error();
@@ -81,18 +140,19 @@ static void	init_window(mlx_t **window, mlx_image_t **image)
 int	main(int argc, char **argv)
 {
 	mlx_t		*window;
-	uint32_t	red;
 
 	(void)argv;
+	frl.sq_w = 128;
+	frl.sq_h = 128;
+	frl.sq_x = (WIDTH / 2) - (frl.sq_w / 2);
+	frl.sq_y = (HEIGHT / 2) - (frl.sq_h / 2);
+	frl.color = 0xFF0000FF;
 	if (argc > 1)
 	{
-		init_window(&window, &image);
-		mlx_put_pixel(image, 0, 0, 0xFF0000FF);
-		mlx_loop_hook(window, navigation, window);
+		init_window(&window, &frl.image);
 		mlx_loop_hook(window, commands, window);
-		red = 0xFF0000FF;
-		draw_rectangle(image, 0, 0, 128, 128, red);
-		// mlx_scroll_hook(window, ft_zoom, window);
+		mlx_scroll_hook(window, scrolling, window);
+		draw_rectangle(frl.image, frl.sq_w, frl.sq_h, frl.color);
 		mlx_loop(window);
 		mlx_terminate(window);
 	}

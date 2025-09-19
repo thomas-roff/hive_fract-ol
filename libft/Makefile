@@ -6,7 +6,7 @@
 #    By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 14:57:58 by thblack-          #+#    #+#              #
-#    Updated: 2025/07/25 14:29:18 by thblack-         ###   ########.fr        #
+#    Updated: 2025/09/18 14:11:16 by thblack-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ NAME = libft.a
 all: start $(NAME) finish
 
 start:
-	@echo "==== BUILDING LIB_FT ========"
+	@echo "==== BUILDING LIB_FT ======="
 
 finish:
 
