@@ -6,7 +6,7 @@
 #    By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 14:57:58 by thblack-          #+#    #+#              #
-#    Updated: 2025/09/12 11:01:00 by thblack-         ###   ########.fr        #
+#    Updated: 2025/09/22 13:37:08 by thblack-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR		= obj
 INC_DIR		= inc
 
 # PROJECT SOURCES: Explicitly states
-SRC_FILES	= fract-ol.c
+SRC_FILES	= fract-ol.c draw.c
 SRC			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 # PROJECT HEADER
