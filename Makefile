@@ -32,7 +32,7 @@ OBJ		= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
 # TOOLS
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 MAKE_QUIET	= --no-print-directory
 SHELL_QUIET	= $(if $(DEBUG),,> /dev/null)
 MAKE_LIB	= make -C
@@ -60,7 +60,7 @@ LIBFT		= -L$(LIBFT_DIR) -lft
 MLX42		= -L$(MLX42_DIR)/build -lmlx42
 GLFW_42		= -lglfw
 GLFW_MAC	= $(shell pkg-config --cflags --libs glfw3) -framework Cocoa -framework OpenGL -framework IOKit
-LIBS		= $(LIBFT) $(MLX42) $(GLFW_MAC)
+LIBS		= $(LIBFT) $(MLX42) $(GLFW_42)
 
 # <<<<<<< MAIN TARGETS >>>>>>>
 

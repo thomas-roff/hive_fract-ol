@@ -13,27 +13,27 @@
 #include "../inc/fract_ol.h"
 #include <stdio.h>
 
-void    draw_image()
+void	draw_image(void)
 {
-    int x;
-    int y;
-    int count;
+	int	x;
+	int	y;
+	int	count;
 
-    y = 1;
-    count = 0;
-    f.scale_x = f.target_w / f.window_w;
-    f.scale_y = f.target_h / f.window_h;
-    while (y < f.window_h)
-    {
-        x = 1;
-        while (x < f.window_w)
-        {
-            if (f.type == 'm')
-                draw_mandel(x, y, count);
-            else if (f.type == 'j')
-                draw_julia(x, y, count);
-            x++;
-        }
-        y++;
-    }
+	y = 1;
+	count = 0;
+	g_f.scale_x = g_f.target_w / g_f.window_w;
+	g_f.scale_y = g_f.target_h / g_f.window_h;
+	while (y < g_f.window_h)
+	{
+		x = 1;
+		while (x < g_f.window_w)
+		{
+			if (g_f.type == 'm')
+				draw_mandel(x, y, count);
+			else if (g_f.type == 'j')
+				draw_julia(x, y, count);
+			x++;
+		}
+		y++;
+	}
 }

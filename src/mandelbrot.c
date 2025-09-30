@@ -12,40 +12,40 @@
 
 #include "../inc/fract_ol.h"
 
-void    init_mandel(void)
+void	init_mandel(void)
 {
-	f.type = 'm';
-	f.target_x = -2.5;
-	f.target_y = -2;
-	f.target_w = 4;
-	f.target_h = 4;
-	f.color_spread = 10;
-	f.color_shift = START_COLOR;
-	f.color_alpha = 0xFF;
-	f.window_w = WIDTH;
-	f.window_h = HEIGHT;
-	f.max_count = MAX_COUNT;
+	g_f.type = 'm';
+	g_f.target_x = -2.5;
+	g_f.target_y = -2;
+	g_f.target_w = 4;
+	g_f.target_h = 4;
+	g_f.color_spread = 10;
+	g_f.color_shift = START_COLOR;
+	g_f.color_alpha = 0xFF;
+	g_f.window_w = WIDTH;
+	g_f.window_h = HEIGHT;
+	g_f.max_count = MAX_COUNT;
 }
 
-void    draw_mandel(int pixel_x, int pixel_y, int count)
+void	draw_mandel(int pixel_x, int pixel_y, int count)
 {
-    double   zx;
-    double   zy;
-    double   cx;
-    double   cy;
-    double   temp_zx;
+	double	zx;
+	double	zy;
+	double	cx;
+	double	cy;
+	double	temp_zx;
 
-    cx = pixel_x * f.scale_x + f.target_x;
-    cy = pixel_y * f.scale_y + f.target_y;
-    zx = 0;
-    zy = 0;
-    count = 0;
-    while ((zx * zx + zy * zy < 4.0) && (count < f.max_count))
-    {
-        temp_zx = zx * zx - zy * zy + cx;
-        zy = 2.0 * zx * zy + cy;
-        zx = temp_zx;
-        count += 1;
-    }
-    mlx_put_pixel(f.image, pixel_x, pixel_y, color_pixel(count));
+	cx = pixel_x * g_f.scale_x + g_f.target_x;
+	cy = pixel_y * g_f.scale_y + g_f.target_y;
+	zx = 0;
+	zy = 0;
+	count = 0;
+	while ((zx * zx + zy * zy < 4.0) && (count < g_f.max_count))
+	{
+		temp_zx = zx * zx - zy * zy + cx;
+		zy = 2.0 * zx * zy + cy;
+		zx = temp_zx;
+		count += 1;
+	}
+	mlx_put_pixel(g_f.image, pixel_x, pixel_y, color_pixel(count));
 }

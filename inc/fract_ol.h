@@ -62,12 +62,12 @@ typedef struct s_fract
 	char		type;
 }	t_fract;
 
-extern t_fract	f;
+extern t_fract	g_f;
 
 // FRACT-OL FUNCTIONS
 
 // DRAW FUNCTIONS
-void		draw_image();
+void	draw_image();
 
 // NAVIGATION
 void	move_image(char axis, float distance);
@@ -79,24 +79,25 @@ uint32_t    color_pixel(int count);
 void		color_change(char c);
 
 // MANDELBROT
-void    init_mandel(void);
-void    draw_mandel(int pixel_x, int pixel_y, int count);
+void	init_mandel(void);
+void	draw_mandel(int pixel_x, int pixel_y, int count);
 
 // JULIA
-double  ft_sin(double x);
-double  ft_cos(double x);
-void    rotate_julia(char c);
-void    init_julia();
-void    draw_julia(int pixel_x, int pixel_y, int count);
+double	ft_sin(double x);
+double	ft_cos(double x);
+void	rotate_julia(char c);
+void	init_julia(char **argv);
+void	draw_julia(int pixel_x, int pixel_y, int count);
 
 // FT_ATOF
 int		ft_power(int base, int exponent);
+int		ft_naf(const char *nptr);
 float	ft_atof(const char *nptr);
 
 // MATHEMATIC FUNCTIONS
-double  ft_sin(double x);
-double  ft_cos(double x);
-double  ft_sqrt(double nbr);
+double	ft_sin(double x);
+double	ft_cos(double x);
+double	ft_sqrt(double nbr);
 double	ft_atan(double x, double y);
 
 #endif

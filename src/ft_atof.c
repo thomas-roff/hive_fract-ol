@@ -24,6 +24,22 @@ int	ft_power(int base, int exponent)
 	return (res);
 }
 
+int	ft_naf(const char *nptr)
+{
+	int	flag;
+
+	flag = FALSE;
+	while (*nptr)
+	{
+		if (ft_isdigit(*nptr))
+			flag = TRUE;
+		if (!ft_isnum(*nptr) && !ft_isspace(*nptr))
+			return (FALSE);
+		nptr++;
+	}
+	return (flag);
+}
+
 float	ft_atof(const char *nptr)
 {
 	float	res;
