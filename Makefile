@@ -6,7 +6,7 @@
 #    By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 14:57:58 by thblack-          #+#    #+#              #
-#    Updated: 2025/09/22 13:37:08 by thblack-         ###   ########.fr        #
+#    Updated: 2025/09/30 13:16:09 by thblack-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ OBJ_DIR		= obj
 INC_DIR		= inc
 
 # PROJECT SOURCES: Explicitly states
-SRC_FILES	= fract-ol.c draw.c
+SRC_FILES	= fract-ol.c draw.c color.c navigation.c julia.c mandelbrot.c \
+				maths.c ft_atof.c
 SRC			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 # PROJECT HEADER
@@ -59,7 +60,7 @@ LIBFT		= -L$(LIBFT_DIR) -lft
 MLX42		= -L$(MLX42_DIR)/build -lmlx42
 GLFW_42		= -lglfw
 GLFW_MAC	= $(shell pkg-config --cflags --libs glfw3) -framework Cocoa -framework OpenGL -framework IOKit
-LIBS		= $(LIBFT) $(MLX42) $(GLFW_42)
+LIBS		= $(LIBFT) $(MLX42) $(GLFW_MAC)
 
 # <<<<<<< MAIN TARGETS >>>>>>>
 

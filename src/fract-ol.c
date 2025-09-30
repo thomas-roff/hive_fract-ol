@@ -6,7 +6,7 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 09:31:52 by thblack-          #+#    #+#             */
-/*   Updated: 2025/09/22 17:13:22 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:11:36 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,114 +28,23 @@ static void	commands(void *param)
 	if (mlx_is_key_down(window, MLX_KEY_ESCAPE))
 		mlx_close_window(window);
 	if (mlx_is_key_down(window, MLX_KEY_UP))
-		f.target_y -= (f.target_h / 100);
+		move_image('y', (0 - f.target_h / 100));
 	if (mlx_is_key_down(window, MLX_KEY_DOWN))
-		f.target_y += (f.target_h / 100);
+		move_image('y', (f.target_h / 100));
 	if (mlx_is_key_down(window, MLX_KEY_LEFT))
-		f.target_x -= (f.target_w / 100);
+		move_image('x', (0 - f.target_h / 100));
 	if (mlx_is_key_down(window, MLX_KEY_RIGHT))
-		f.target_x += (f.target_w / 100);
+		move_image('x', (f.target_h / 100));
 	if (mlx_is_key_down(window, MLX_KEY_C))
-		f.color_shift += 3;
-	if (mlx_is_key_down(window, MLX_KEY_V))
-	{
-		f.color_spread -= 1;
-		if (f.color_spread < 2)
-			f.color_spread = 2;
-	}
-	if (mlx_is_key_down(window, MLX_KEY_B))
-	{
-		f.color_spread += 1;
-		if (f.color_spread > 50)
-			f.color_spread = 50;
-	}
-	draw_image();
-}
-
-static void	clear_image(mlx_image_t *image)
-{
-	unsigned int	i;
-	unsigned int	j;
-
-	i = 0;
-	while (i < image->height)
-	{
-		j = 0;
-		while (j < image->width)
-		{
-			mlx_put_pixel(image, j, i, 0x00000000);
-			j++;
-		}
-		i++;
-	}
-}
-
-void draw_rectangle(mlx_image_t *image, int width, int height, uint32_t color)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	clear_image(image);
-	while (i < height)
-	{
-		j = 0;
-		while (j < width)
-		{
-			mlx_put_pixel(image, j, i, color);
-			j++;
-		}
-		i++;
-	}
-}
-
-static void	scrolling(double xdelta, double ydelta, void *param)
-{
-	mlx_t	*window;
-	double	old_w;
-	double	old_h;
-	double	old_x;
-	double	old_y;
-
-	(void)xdelta;
-	window = param;
-	old_w = f.target_w;
-	old_h = f.target_h;
-	old_x = f.target_x;
-	old_y = f.target_y;
-	if (ydelta > 0)
-	{
-		f.target_w *= 0.8;
-		f.target_h *= 0.8;
-	}
-	else if (ydelta < 0)
-	{
-		f.target_w *= 1.25;
-		f.target_h *= 1.25;
-	}
-	else
-		return ;
-	if (f.target_w > 9)
-		f.target_w = 9;
-	if (f.target_h > 9)
-		f.target_h = 9;
-	f.target_x = (old_x + old_w / 2) - (f.target_w / 2);
-	f.target_y = (old_y + old_h / 2) - (f.target_h / 2);
-	draw_image();
-}
-
-void    init_mandel(void)
-{
-    f.target_x = -2.5;
-    f.target_y = -2;
-    f.target_w = 4;
-    f.target_h = 4;
-    f.color_spread = 10;
-    f.color_shift = 0;
-	f.color_alpha = 0xFF;
-	f.window_w = WIDTH;
-	f.window_h = HEIGHT;
-	f.max_count = MAX_COUNT;
+		color_change('c');
+	if (mlx_is_key_down(window, MLX_KEY_COMMA))
+		color_change(',');
+	if (mlx_is_key_down(window, MLX_KEY_PERIOD))
+		color_change('.');
+	if (mlx_is_key_down(window, MLX_KEY_LEFT_BRACKET))
+		rotate_julia('l');
+	if (mlx_is_key_down(window, MLX_KEY_RIGHT_BRACKET))
+		rotate_julia('r');
 }
 
 static void	init_window(mlx_t **window, mlx_image_t **image)
@@ -151,6 +60,12 @@ static void	init_window(mlx_t **window, mlx_image_t **image)
 	}
 }
 
+static void	parse_args(char **argv)
+{
+	f.julia_cx = ft_atof(argv[2]);
+	f.julia_cy = ft_atof(argv[3]);
+}
+
 int	main(int argc, char **argv)
 {
 	mlx_t		*window;
@@ -159,13 +74,15 @@ int	main(int argc, char **argv)
 	if (argc > 1)
 	{
 		if (!ft_strcmp(argv[1], "mandelbrot"))
-			f.type = 1;
+			init_mandel();
 		if (!ft_strcmp(argv[1], "julia"))
-			f.type = 2;
+		{
+			parse_args(argv);
+			init_julia();
+		}
 		init_window(&window, &f.image);
 		mlx_loop_hook(window, commands, window);
 		mlx_scroll_hook(window, scrolling, window);
-		init_mandel();
 		draw_image();
 		mlx_loop(window);
 		mlx_terminate(window);
