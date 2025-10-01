@@ -6,7 +6,7 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 18:07:57 by thblack-          #+#    #+#             */
-/*   Updated: 2025/09/30 13:15:07 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:42:51 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,28 @@ typedef struct s_fract
 
 extern t_fract	g_f;
 
-// FRACT-OL FUNCTIONS
-
-// DRAW FUNCTIONS
-void	draw_image();
+// MAIN FUNCTIONS
+int		main(int argc, char **argv);
+int		parse_input(char **argv);
+void	init_window(mlx_t **window, mlx_image_t **image);
+void	commands(void *param);
+void	draw_image(void);
 
 // NAVIGATION
 void	move_image(char axis, float distance);
+void	zoom_image(float scale);
 void	scrolling(double xdelta, double ydelta, void *param);
 
 // COLOR
-int			get_color_channel(int color_picker);
-uint32_t    color_pixel(int count);
-void		color_change(char c);
+int		get_color_channel(int color_picker);
+void	color_change(char c);
+int		color_pixel(int count);
 
 // MANDELBROT
 void	init_mandel(void);
 void	draw_mandel(int pixel_x, int pixel_y, int count);
 
 // JULIA
-double	ft_sin(double x);
-double	ft_cos(double x);
 void	rotate_julia(char c);
 void	init_julia(char **argv);
 void	draw_julia(int pixel_x, int pixel_y, int count);
@@ -99,5 +100,9 @@ double	ft_sin(double x);
 double	ft_cos(double x);
 double	ft_sqrt(double nbr);
 double	ft_atan(double x, double y);
+
+// MESSAGES
+void	ft_error(void);
+void	input_prompt(void);
 
 #endif

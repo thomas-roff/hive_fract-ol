@@ -6,21 +6,17 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 12:42:13 by thblack-          #+#    #+#             */
-/*   Updated: 2025/09/30 13:13:50 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:26:57 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fract_ol.h"
-#include <stdio.h>
 
 void	init_julia(char **argv)
 {
-	(void)argv;
 	g_f.type = 'j';
-	// g_f.julia_cx = ft_atof(argv[2]);
-	// g_f.julia_cy = ft_atof(argv[3]);
-	// printf("CX: %f\n", g_f.julia_cx);
-	// printf("CY: %f\n", g_f.julia_cy);
+	g_f.julia_cx = ft_atof(argv[2]);
+	g_f.julia_cy = ft_atof(argv[3]);
 	g_f.target_x = -2;
 	g_f.target_y = -2;
 	g_f.target_w = 4;

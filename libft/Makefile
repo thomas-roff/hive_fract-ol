@@ -6,14 +6,15 @@
 #    By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 14:57:58 by thblack-          #+#    #+#              #
-#    Updated: 2025/09/18 14:11:16 by thblack-         ###   ########.fr        #
+#    Updated: 2025/10/01 10:56:33 by thblack-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ASCII
 ASCII_DIR = ascii
 ASCII_FILES = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
-			  ft_isprint.c ft_toupper.c ft_tolower.c ft_isspace.c ft_isnum.c
+				ft_isprint.c ft_toupper.c ft_tolower.c ft_isspace.c ft_isnum.c \
+				ft_isfloat.c
 ASCII = $(addprefix $(ASCII_DIR)/, $(ASCII_FILES))
 
 # GNL

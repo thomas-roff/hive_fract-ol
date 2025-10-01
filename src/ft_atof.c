@@ -6,7 +6,7 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 15:41:06 by thblack-          #+#    #+#             */
-/*   Updated: 2025/09/17 15:59:26 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 10:59:52 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_naf(const char *nptr)
 	{
 		if (ft_isdigit(*nptr))
 			flag = TRUE;
-		if (!ft_isnum(*nptr) && !ft_isspace(*nptr))
+		if (!ft_isfloat(*nptr) && !ft_isspace(*nptr))
 			return (FALSE);
 		nptr++;
 	}
@@ -60,10 +60,7 @@ float	ft_atof(const char *nptr)
 	else
 		return ((float)integer);
 	while (ft_isdigit((int)nptr[i]))
-	{
-		decimal = (decimal * 10) + (nptr[i] - '0');
-		i++;
-	}
+		decimal = (decimal * 10) + (nptr[i++] - '0');
 	decimal /= ft_power(10, i);
 	if (integer < 0)
 		decimal *= (float)-1;

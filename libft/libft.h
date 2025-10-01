@@ -6,7 +6,7 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:32:41 by thblack-          #+#    #+#             */
-/*   Updated: 2025/09/09 17:34:02 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 10:57:10 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 // Checks if input int 'c' is numeric character or sign in ascii
 int		ft_isnum(int c);
+// Checks if input int 'c' is numeric character, period or sign in ascii
+int		ft_isfloat(int c);
 // Checks if input int 'c' is alphanumeric character in ascii
 int		ft_isalnum(int c);
 // Checks if input int 'c' is valid character in ascii

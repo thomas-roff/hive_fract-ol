@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color_old.c                                        :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 14:45:01 by thblack-          #+#    #+#             */
-/*   Updated: 2025/09/30 16:58:09 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:43:13 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	get_color_channel(int color_picker)
 		return (0);
 }
 
-uint32_t	color_pixel(int count)
+int	color_pixel(int count)
 {
 	int			red;
 	int			green;

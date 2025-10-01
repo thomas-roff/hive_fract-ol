@@ -6,7 +6,7 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 09:31:52 by thblack-          #+#    #+#             */
-/*   Updated: 2025/09/30 13:11:36 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 11:36:34 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,58 @@
 
 t_fract	g_f;
 
-void	ft_error(void)
+int	main(int argc, char **argv)
 {
-	ft_putendl_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
-	exit(EXIT_FAILURE);
+	mlx_t		*window;
+
+	(void)argv;
+	if (argc > 1)
+	{
+		if (!parse_input(argv))
+			input_prompt();
+		init_window(&window, &g_f.image);
+		mlx_loop_hook(window, commands, window);
+		mlx_scroll_hook(window, scrolling, window);
+		draw_image();
+		mlx_loop(window);
+		mlx_terminate(window);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	parse_input(char **argv)
+{
+	int	flag;
+
+	flag = KO;
+	if (!ft_strcmp(argv[1], "mandelbrot") || !ft_strcmp(argv[1], "Mandelbrot")
+		|| !ft_strcmp(argv[1], "m") || !ft_strcmp(argv[1], "M"))
+	{
+		flag = OK;
+		init_mandel();
+	}
+	else if (!ft_strcmp(argv[1], "julia") || !ft_strcmp(argv[1], "Julia")
+		|| !ft_strcmp(argv[1], "j") || !ft_strcmp(argv[1], "J"))
+	{
+		flag = OK;
+		if (!argv[2] || !argv[3] || !ft_naf(argv[2]) || !ft_naf(argv[3]))
+			return (KO);
+		init_julia(argv);
+	}
+	return (flag);
+}
+
+void	init_window(mlx_t **window, mlx_image_t **image)
+{
+	*window = mlx_init(WIDTH, HEIGHT, "Fract-ol", TRUE);
+	if (!*window)
+		ft_error();
+	*image = mlx_new_image(*window, WIDTH, HEIGHT);
+	if (!*image || mlx_image_to_window(*window, *image, 0, 0) < 0)
+	{
+		mlx_close_window(*window);
+		ft_error();
+	}
 }
 
 void	commands(void *param)
@@ -47,72 +95,27 @@ void	commands(void *param)
 		rotate_julia('r');
 }
 
-void	init_window(mlx_t **window, mlx_image_t **image)
+void	draw_image(void)
 {
-	*window = mlx_init(WIDTH, HEIGHT, "Fract-ol", TRUE);
-	if (!*window)
-		ft_error();
-	*image = mlx_new_image(*window, WIDTH, HEIGHT);
-	if (!*image || mlx_image_to_window(*window, *image, 0, 0) < 0)
+	int	x;
+	int	y;
+	int	count;
+
+	y = 1;
+	count = 0;
+	g_f.scale_x = g_f.target_w / g_f.window_w;
+	g_f.scale_y = g_f.target_h / g_f.window_h;
+	while (y < g_f.window_h)
 	{
-		mlx_close_window(*window);
-		ft_error();
-	}
-}
-
-void	parse_args(char **argv)
-{
-	g_f.julia_cx = ft_atof(argv[2]);
-	g_f.julia_cy = ft_atof(argv[3]);
-}
-
-void	input_helper(void)
-{
-	ft_putendl_fd("Bad input", 1);
-	exit(EXIT_FAILURE);
-}
-
-int	parse_input(char **argv)
-{
-	int	flag;
-
-	flag = KO;
-	if (!ft_strcmp(argv[1], "mandelbrot") || !ft_strcmp(argv[1], "Mandelbrot")
-		|| !ft_strcmp(argv[1], "m") || !ft_strcmp(argv[1], "M"))
-	{
-		flag = OK;
-		init_mandel();
-	}
-	else if (!ft_strcmp(argv[1], "julia") || !ft_strcmp(argv[1], "Julia")
-		|| !ft_strcmp(argv[1], "j") || !ft_strcmp(argv[1], "J"))
-	{
-		flag = OK;
-		if (!ft_naf(argv[2]) || !ft_naf(argv[3]))
-			return (KO);
-		init_julia(argv);
-	}
-	return (flag);
-}
-
-int	main(int argc, char **argv)
-{
-	mlx_t		*window;
-
-	(void)argv;
-	if (argc > 1)
-	{
-		if (!parse_input(argv))
-			input_helper();
-		if (!ft_strcmp(argv[1], "julia"))
+		x = 1;
+		while (x < g_f.window_w)
 		{
-			parse_args(argv);
+			if (g_f.type == 'm')
+				draw_mandel(x, y, count);
+			else if (g_f.type == 'j')
+				draw_julia(x, y, count);
+			x++;
 		}
-		init_window(&window, &g_f.image);
-		mlx_loop_hook(window, commands, window);
-		mlx_scroll_hook(window, scrolling, window);
-		draw_image();
-		mlx_loop(window);
-		mlx_terminate(window);
+		y++;
 	}
-	return (EXIT_SUCCESS);
 }

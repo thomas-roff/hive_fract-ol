@@ -6,7 +6,7 @@
 #    By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 14:57:58 by thblack-          #+#    #+#              #
-#    Updated: 2025/09/30 13:16:09 by thblack-         ###   ########.fr        #
+#    Updated: 2025/10/01 11:37:52 by thblack-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ OBJ_DIR		= obj
 INC_DIR		= inc
 
 # PROJECT SOURCES: Explicitly states
-SRC_FILES	= fract-ol.c draw.c color.c navigation.c julia.c mandelbrot.c \
-				maths.c ft_atof.c
+SRC_FILES	= main.c color.c navigation.c julia.c mandelbrot.c maths.c \
+				ft_atof.c messages.c
 SRC			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 # PROJECT HEADER
