@@ -35,10 +35,10 @@ void	draw_mandel(int pixel_x, int pixel_y, int count)
 	double	cy;
 	double	temp_zx;
 
-	cx = pixel_x * g_f.scale_x + g_f.target_x;
-	cy = pixel_y * g_f.scale_y + g_f.target_y;
-	zx = 0;
-	zy = 0;
+	cx = (double)pixel_x * (double)g_f.scale_x + (double)g_f.target_x;
+	cy = (double)pixel_y * (double)g_f.scale_y + (double)g_f.target_y;
+	zx = 0.0;
+	zy = 0.0;
 	count = 0;
 	while ((zx * zx + zy * zy < 4.0) && (count < g_f.max_count))
 	{

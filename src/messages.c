@@ -6,7 +6,7 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 11:30:53 by thblack-          #+#    #+#             */
-/*   Updated: 2025/10/01 11:32:31 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:20:44 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,31 @@
 void	ft_error(void)
 {
 	ft_putendl_fd((char *)mlx_strerror(mlx_errno), STDERR_FILENO);
+	exit(EXIT_FAILURE);
+}
+
+void	input_helper(void)
+{
+	ft_putendl_fd("========================================", 1);
+	ft_putendl_fd("|         THOMASROFF FRACT-OL          |", 1);
+	ft_putendl_fd("========================================", 1);
+	ft_putendl_fd("", 1);
+	ft_putendl_fd("NAVIGATION", 1);
+	ft_putendl_fd(" - Mouse scroll wheel: zoom in and out.", 1);
+	ft_putendl_fd(" - Arrow keys: move up, down, left", 1);
+	ft_putendl_fd("   and right.", 1);
+	ft_putendl_fd("", 1);
+	ft_putendl_fd("COLOUR", 1);
+	ft_putendl_fd(" - \"c\": change colour palette (cycles", 1);
+	ft_putendl_fd("   through colour wheel.", 1);
+	ft_putendl_fd(" - \",\" & \".\" increase and decrease", 1);
+	ft_putendl_fd("   range of colours used on color wheel.", 1);
+	ft_putendl_fd(" - \"[\" & \"]\" rotate Julia set (rotates", 1);
+	ft_putendl_fd("   c-real/c-imaginary around zero).", 1);
+	ft_putendl_fd("", 1);
+	ft_putendl_fd("EXIT", 1);
+	ft_putendl_fd(" - \"[ESC]\" to close.", 1);
+	ft_putendl_fd("", 1);
 	exit(EXIT_FAILURE);
 }
 
@@ -36,10 +61,13 @@ void	input_prompt(void)
 	ft_putendl_fd("JULIA", 1);
 	ft_putendl_fd("For the Julia set pass \"j\", \"J\", \"julia\",", 1);
 	ft_putendl_fd("or \"Julia\" as the first argument PLUS", 1);
-	ft_putendl_fd("2 float values between -1.0 and 1.0 for", 1);
-	ft_putendl_fd("for the constant in the order c-real,", 1);
-	ft_putendl_fd("c-imaginary.", 1);
+	ft_putendl_fd("2 float values (best results between", 1);
+	ft_putendl_fd("-1.0 and 1.0) for for the constant in", 1);
+	ft_putendl_fd("the order c-real, c-imaginary.", 1);
 	ft_putendl_fd("e.g. \"./fract-ol julia 0.1 -0.7\"", 1);
+	ft_putendl_fd("", 1);
+	ft_putendl_fd("For help with controls use the argument:", 1);
+	ft_putendl_fd("\"-help\". e.g. \"./fract-ol -help\"", 1);
 	ft_putendl_fd("", 1);
 	exit(EXIT_FAILURE);
 }

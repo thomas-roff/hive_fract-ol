@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fract-ol.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 09:31:52 by thblack-          #+#    #+#             */
-/*   Updated: 2025/10/01 11:36:34 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:15:55 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	main(int argc, char **argv)
 {
 	mlx_t		*window;
 
-	(void)argv;
 	if (argc > 1)
 	{
 		if (!parse_input(argv))
@@ -28,8 +27,11 @@ int	main(int argc, char **argv)
 		mlx_scroll_hook(window, scrolling, window);
 		draw_image();
 		mlx_loop(window);
+		mlx_close_window(window);
 		mlx_terminate(window);
 	}
+	else
+		input_prompt();
 	return (EXIT_SUCCESS);
 }
 
@@ -52,6 +54,8 @@ int	parse_input(char **argv)
 			return (KO);
 		init_julia(argv);
 	}
+	else if (!ft_strcmp(argv[1], "-help"))
+		input_helper();
 	return (flag);
 }
 
@@ -103,8 +107,8 @@ void	draw_image(void)
 
 	y = 1;
 	count = 0;
-	g_f.scale_x = g_f.target_w / g_f.window_w;
-	g_f.scale_y = g_f.target_h / g_f.window_h;
+	g_f.scale_x = g_f.target_w / (float)g_f.window_w;
+	g_f.scale_y = g_f.target_h / (float)g_f.window_h;
 	while (y < g_f.window_h)
 	{
 		x = 1;

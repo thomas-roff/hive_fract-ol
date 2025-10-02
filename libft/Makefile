@@ -69,12 +69,10 @@ RMFILE = rm -f
 RMDIR = rm -rf
 NAME = libft.a
 
-all: start $(NAME) finish
+all: start $(NAME)
 
 start:
-	@echo "==== BUILDING LIB_FT ======="
-
-finish:
+	@echo "==== BUILDING LIB_FT ========"
 
 $(NAME): $(OBJECTS)
 	@$(AR) $(NAME) $(OBJECTS)
@@ -95,4 +93,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re start

@@ -6,7 +6,7 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 18:07:57 by thblack-          #+#    #+#             */
-/*   Updated: 2025/10/01 11:42:51 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/01 12:16:13 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 // WINDOW HEIGHT
 # define HEIGHT 512
 // MAXIMUM ITERATIONS OF FRACTAL OPERATION
-# define MAX_COUNT 60
+# define MAX_COUNT 100
 // DESCRETE COLORS ON COLOR WHEEL
 # define COLOR_WHEEL 1536
 // SIZE OF SIDE ON COLOR WHEEL & MAX VALUE OF COLOR IN HEX
@@ -42,12 +42,12 @@
 typedef struct s_fract
 {
 	mlx_image_t	*image;
-	float		target_x;
-	float		target_y;
-	float		target_w;
-	float		target_h;
-	float		scale_x;
-	float		scale_y;
+	double		target_x;
+	double		target_y;
+	double		target_w;
+	double		target_h;
+	double		scale_x;
+	double		scale_y;
 	float		julia_cx;
 	float		julia_cy;
 	double		julia_angle;
@@ -103,6 +103,7 @@ double	ft_atan(double x, double y);
 
 // MESSAGES
 void	ft_error(void);
+void	input_helper(void);
 void	input_prompt(void);
 
 #endif

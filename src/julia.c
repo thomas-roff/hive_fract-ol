@@ -49,13 +49,13 @@ void	draw_julia(int pixel_x, int pixel_y, int count)
 	double	zy;
 	double	temp_zx;
 
-	zx = pixel_x * g_f.scale_x + g_f.target_x;
-	zy = pixel_y * g_f.scale_y + g_f.target_y;
+	zx = (double)pixel_x * (double)g_f.scale_x + (double)g_f.target_x;
+	zy = (double)pixel_y * (double)g_f.scale_y + (double)g_f.target_y;
 	count = 0;
 	while ((zx * zx + zy * zy < 8.0) && (count < g_f.max_count))
 	{
-		temp_zx = zx * zx - zy * zy + g_f.julia_cx;
-		zy = 2.0 * zx * zy + g_f.julia_cy;
+		temp_zx = zx * zx - zy * zy + (double)g_f.julia_cx;
+		zy = 2.0 * zx * zy + (double)g_f.julia_cy;
 		zx = temp_zx;
 		count += 1;
 	}
