@@ -6,13 +6,14 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 09:31:52 by thblack-          #+#    #+#             */
-/*   Updated: 2025/10/01 12:15:55 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/02 16:43:49 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fract_ol.h"
 
-t_fract	g_f;
+static t_fract		f;
+static mlx_image_t	*image;
 
 int	main(int argc, char **argv)
 {
@@ -20,12 +21,16 @@ int	main(int argc, char **argv)
 
 	if (argc > 1)
 	{
-		if (!parse_input(argv))
+		if (!parse_input(f.type, argv))
 			input_prompt();
-		init_window(&window, &g_f.image);
+		if (f.type == 'm')
+			init_mandel(f);
+		else if (f.type == 'j')
+			init_julia(f, argv);
+		init_window(&window, &image);
 		mlx_loop_hook(window, commands, window);
 		mlx_scroll_hook(window, scrolling, window);
-		draw_image();
+		draw_image(f, image);
 		mlx_loop(window);
 		mlx_close_window(window);
 		mlx_terminate(window);
@@ -33,43 +38,6 @@ int	main(int argc, char **argv)
 	else
 		input_prompt();
 	return (EXIT_SUCCESS);
-}
-
-int	parse_input(char **argv)
-{
-	int	flag;
-
-	flag = KO;
-	if (!ft_strcmp(argv[1], "mandelbrot") || !ft_strcmp(argv[1], "Mandelbrot")
-		|| !ft_strcmp(argv[1], "m") || !ft_strcmp(argv[1], "M"))
-	{
-		flag = OK;
-		init_mandel();
-	}
-	else if (!ft_strcmp(argv[1], "julia") || !ft_strcmp(argv[1], "Julia")
-		|| !ft_strcmp(argv[1], "j") || !ft_strcmp(argv[1], "J"))
-	{
-		flag = OK;
-		if (!argv[2] || !argv[3] || !ft_naf(argv[2]) || !ft_naf(argv[3]))
-			return (KO);
-		init_julia(argv);
-	}
-	else if (!ft_strcmp(argv[1], "-help"))
-		input_helper();
-	return (flag);
-}
-
-void	init_window(mlx_t **window, mlx_image_t **image)
-{
-	*window = mlx_init(WIDTH, HEIGHT, "Fract-ol", TRUE);
-	if (!*window)
-		ft_error();
-	*image = mlx_new_image(*window, WIDTH, HEIGHT);
-	if (!*image || mlx_image_to_window(*window, *image, 0, 0) < 0)
-	{
-		mlx_close_window(*window);
-		ft_error();
-	}
 }
 
 void	commands(void *param)
@@ -80,26 +48,52 @@ void	commands(void *param)
 	if (mlx_is_key_down(window, MLX_KEY_ESCAPE))
 		mlx_close_window(window);
 	if (mlx_is_key_down(window, MLX_KEY_UP))
-		move_image('y', (0 - g_f.target_h / 100));
+		move_image(f, 'y', (0 - f.target_h / 100));
 	if (mlx_is_key_down(window, MLX_KEY_DOWN))
-		move_image('y', (g_f.target_h / 100));
+		move_image(f, 'y', (f.target_h / 100));
 	if (mlx_is_key_down(window, MLX_KEY_LEFT))
-		move_image('x', (0 - g_f.target_h / 100));
+		move_image(f, 'x', (0 - f.target_h / 100));
 	if (mlx_is_key_down(window, MLX_KEY_RIGHT))
-		move_image('x', (g_f.target_h / 100));
+		move_image(f, 'x', (f.target_h / 100));
 	if (mlx_is_key_down(window, MLX_KEY_C))
-		color_change('c');
+		color_change(f, 'c');
 	if (mlx_is_key_down(window, MLX_KEY_COMMA))
-		color_change(',');
+		color_change(f, ',');
 	if (mlx_is_key_down(window, MLX_KEY_PERIOD))
-		color_change('.');
+		color_change(f, '.');
 	if (mlx_is_key_down(window, MLX_KEY_LEFT_BRACKET))
-		rotate_julia('l');
+		rotate_julia(f, 'l');
 	if (mlx_is_key_down(window, MLX_KEY_RIGHT_BRACKET))
-		rotate_julia('r');
+		rotate_julia(f, 'r');
+	if (f.redraw == TRUE)
+		draw_image(f, image);
 }
 
-void	draw_image(void)
+void	scrolling(double xdelta, double ydelta, void *param)
+{
+	double	old_centerx;
+	double	old_centery;
+
+	(void)xdelta;
+	(void)param;
+	old_centerx = f.target_x + f.target_w / 2;
+	old_centery = f.target_y + f.target_h / 2;
+	if (ydelta > 0)
+		zoom_image(f, 0.9);
+	else if (ydelta < 0)
+		zoom_image(f, 1.1111111);
+	else
+		return ;
+	if (f.target_w > 9)
+		f.target_w = 9;
+	if (f.target_h > 9)
+		f.target_h = 9;
+	f.target_x = old_centerx - (f.target_w / 2);
+	f.target_y = old_centery - (f.target_h / 2);
+	draw_image(f, image);
+}
+
+void	draw_image(t_fract f, mlx_image_t *image)
 {
 	int	x;
 	int	y;
@@ -107,19 +101,20 @@ void	draw_image(void)
 
 	y = 1;
 	count = 0;
-	g_f.scale_x = g_f.target_w / (float)g_f.window_w;
-	g_f.scale_y = g_f.target_h / (float)g_f.window_h;
-	while (y < g_f.window_h)
+	f.scale_x = f.target_w / (float)f.window_w;
+	f.scale_y = f.target_h / (float)f.window_h;
+	while (y < f.window_h)
 	{
 		x = 1;
-		while (x < g_f.window_w)
+		while (x < f.window_w)
 		{
-			if (g_f.type == 'm')
-				draw_mandel(x, y, count);
-			else if (g_f.type == 'j')
-				draw_julia(x, y, count);
+			if (f.type == 'm')
+				draw_mandel(f, image, x, y);
+			else if (f.type == 'j')
+				draw_julia(f, image, x, y);
 			x++;
 		}
 		y++;
 	}
+	f.redraw = FALSE;
 }

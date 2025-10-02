@@ -6,7 +6,7 @@
 /*   By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 18:07:57 by thblack-          #+#    #+#             */
-/*   Updated: 2025/10/01 12:16:13 by thblack-         ###   ########.fr       */
+/*   Updated: 2025/10/02 16:44:16 by thblack-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 // FRACT-OL
 typedef struct s_fract
 {
-	mlx_image_t	*image;
+	char		type;
 	double		target_x;
 	double		target_y;
 	double		target_w;
@@ -58,37 +58,52 @@ typedef struct s_fract
 	int			color_spread;
 	int			color_alpha;
 	uint32_t	color;
-	int			max_count;
-	char		type;
+	int			redraw;
 }	t_fract;
 
-extern t_fract	g_f;
+typedef struct s_mandel
+{
+	double	zx;
+	double	zy;
+	double	cx;
+	double	cy;
+	double	temp_zx;
+}	t_mandel;
+
+typedef struct s_julia
+{
+	double	zx;
+	double	zy;
+	double	temp_zx;
+}	t_julia;
 
 // MAIN FUNCTIONS
 int		main(int argc, char **argv);
-int		parse_input(char **argv);
-void	init_window(mlx_t **window, mlx_image_t **image);
 void	commands(void *param);
-void	draw_image(void);
+void	scrolling(double xdelta, double ydelta, void *param);
+void	draw_image(t_fract f, mlx_image_t *image);
+
+// INITIALIZATION
+int		parse_input(char type, char **argv);
+void	init_window(mlx_t **window, mlx_image_t **image);
 
 // NAVIGATION
-void	move_image(char axis, float distance);
-void	zoom_image(float scale);
-void	scrolling(double xdelta, double ydelta, void *param);
+void	move_image(t_fract f, char axis, float distance);
+void	zoom_image(t_fract f, float scale);
 
 // COLOR
 int		get_color_channel(int color_picker);
-void	color_change(char c);
-int		color_pixel(int count);
+void	color_change(t_fract f, char c);
+int		color_pixel(t_fract f, int count);
 
 // MANDELBROT
-void	init_mandel(void);
-void	draw_mandel(int pixel_x, int pixel_y, int count);
+void	init_mandel(t_fract f);
+void	draw_mandel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
 
 // JULIA
-void	rotate_julia(char c);
-void	init_julia(char **argv);
-void	draw_julia(int pixel_x, int pixel_y, int count);
+void	rotate_julia(t_fract f, char c);
+void	init_julia(t_fract f, char **argv);
+void	draw_julia(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
 
 // FT_ATOF
 int		ft_power(int base, int exponent);

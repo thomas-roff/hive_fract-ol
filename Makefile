@@ -6,7 +6,7 @@
 #    By: thblack- <thblack-@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 14:57:58 by thblack-          #+#    #+#              #
-#    Updated: 2025/10/01 11:37:52 by thblack-         ###   ########.fr        #
+#    Updated: 2025/10/02 16:44:25 by thblack-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ INC_DIR		= inc
 
 # PROJECT SOURCES: Explicitly states
 SRC_FILES	= main.c color.c navigation.c julia.c mandelbrot.c maths.c \
-				ft_atof.c messages.c
+				ft_atof.c messages.c init.c
 SRC			= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 # PROJECT HEADER
