@@ -12,22 +12,22 @@
 
 #include "../inc/fract_ol.h"
 
-void	move_image(t_fract f, char axis, float distance)
+void	move_image(t_fract *f, char axis, float distance)
 {
 	if (axis == 'x')
-		f.target_x += distance;
+		f->target_x += distance;
 	if (axis == 'y')
-		f.target_y += distance;
+		f->target_y += distance;
 	if (axis == 'z')
 	{
-		f.target_x += distance;
-		f.target_y += distance;
+		f->target_x += distance;
+		f->target_y += distance;
 	}
-	f.redraw = TRUE;
+	f->redraw = TRUE;
 }
 
-void	zoom_image(t_fract f, float scale)
+void	zoom_image(t_fract *f, float scale)
 {
-	f.target_w *= scale;
-	f.target_h *= scale;
+	f->target_w *= scale;
+	f->target_h *= scale;
 }

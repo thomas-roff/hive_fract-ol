@@ -41,6 +41,8 @@
 // FRACT-OL
 typedef struct s_fract
 {
+	mlx_t		*window;
+	mlx_image_t	*image;
 	char		type;
 	double		target_x;
 	double		target_y;
@@ -79,30 +81,30 @@ typedef struct s_julia
 
 // MAIN FUNCTIONS
 int		main(int argc, char **argv);
-void	commands(void *param);
+void	commands(void *params);
 void	scrolling(double xdelta, double ydelta, void *param);
-void	draw_image(t_fract f, mlx_image_t *image);
+void	draw_image(t_fract f);
 
 // INITIALIZATION
-int		parse_input(char type, char **argv);
+int		parse_input(t_fract *f, int argc, char **argv);
 void	init_window(mlx_t **window, mlx_image_t **image);
 
 // NAVIGATION
-void	move_image(t_fract f, char axis, float distance);
-void	zoom_image(t_fract f, float scale);
+void	move_image(t_fract *f, char axis, float distance);
+void	zoom_image(t_fract *f, float scale);
 
 // COLOR
 int		get_color_channel(int color_picker);
-void	color_change(t_fract f, char c);
+void	color_change(t_fract *f, char c);
 int		color_pixel(t_fract f, int count);
 
 // MANDELBROT
-void	init_mandel(t_fract f);
+void	init_mandel(t_fract *f);
 void	draw_mandel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
 
 // JULIA
-void	rotate_julia(t_fract f, char c);
-void	init_julia(t_fract f, char **argv);
+void	rotate_julia(t_fract *f, char c);
+void	init_julia(t_fract *f, char **argv);
 void	draw_julia(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
 
 // FT_ATOF

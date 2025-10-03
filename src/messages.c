@@ -54,8 +54,8 @@ void	input_prompt(void)
 	ft_putendl_fd("", 1);
 	ft_putendl_fd("MANDELBROT", 1);
 	ft_putendl_fd("For the Mandelbrot set pass \"m\", \"M\",", 1);
-	ft_putendl_fd("\"mandelbrot\" or \"Mandelbrot\" as the", 1);
-	ft_putendl_fd("first argument.", 1);
+	ft_putendl_fd("\"mandelbrot\" or \"Mandelbrot\" as an", 1);
+	ft_putendl_fd("argument.", 1);
 	ft_putendl_fd("e.g. \"./fract-ol m\"", 1);
 	ft_putendl_fd("", 1);
 	ft_putendl_fd("JULIA", 1);

@@ -12,17 +12,22 @@
 
 #include "../inc/fract_ol.h"
 
-void	init_mandel(t_fract f)
+void	init_mandel(t_fract *f)
 {
-	f.target_x = -2.5;
-	f.target_y = -2;
-	f.target_w = 4;
-	f.target_h = 4;
-	f.color_spread = 10;
-	f.color_shift = START_COLOR;
-	f.color_alpha = 0xFF;
-	f.window_w = WIDTH;
-	f.window_h = HEIGHT;
+	f->target_x = -2.5;
+	f->target_y = -2;
+	f->target_w = 4;
+	f->target_h = 4;
+	f->color_spread = 10;
+	f->color_shift = START_COLOR;
+	f->color_alpha = 0xFF;
+	f->window_w = WIDTH;
+	f->window_h = HEIGHT;
+	f->julia_cx = 0;
+	f->julia_cy = 0;
+	f->julia_angle = 0;
+	f->julia_radius = 0;
+	f->redraw = FALSE;
 }
 
 void	draw_mandel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y)

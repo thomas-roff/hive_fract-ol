@@ -44,20 +44,20 @@ int	color_pixel(t_fract f, int count)
 	return (color);
 }
 
-void	color_change(t_fract f, char c)
+void	color_change(t_fract *f, char c)
 {
 	if (c == 'c')
-		f.color_shift += 3;
+		f->color_shift += 3;
 	if (c == ',')
 	{
-		f.color_spread -= 1;
-		if (f.color_spread < 2)
-			f.color_spread = 2;
+		f->color_spread -= 1;
+		if (f->color_spread < 2)
+			f->color_spread = 2;
 	}
 	if (c == '.')
 	{
-		f.color_spread += 1;
-		if (f.color_spread > 50)
-			f.color_spread = 50;
+		f->color_spread += 1;
+		if (f->color_spread > 50)
+			f->color_spread = 50;
 	}
 }
