@@ -82,10 +82,6 @@ void	scrolling(double xdelta, double ydelta, void *params)
 		zoom_image(f, 1.1111111);
 	else
 		return ;
-	if (f->target_w > 9)
-		f->target_w = 9;
-	if (f->target_h > 9)
-		f->target_h = 9;
 	f->target_x = old_centerx - (f->target_w / 2);
 	f->target_y = old_centery - (f->target_h / 2);
 	draw_image(*f);

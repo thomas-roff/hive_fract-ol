@@ -52,7 +52,7 @@ void	draw_julia(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y)
 	zx = (double)pixel_x * (double)f.scale_x + (double)f.target_x;
 	zy = (double)pixel_y * (double)f.scale_y + (double)f.target_y;
 	count = 0;
-	while ((zx * zx + zy * zy < 8.0) && (count < MAX_COUNT))
+	while ((zx * zx + zy * zy < 4.0) && (count < MAX_COUNT))
 	{
 		temp_zx = zx * zx - zy * zy + (double)f.julia_cx;
 		zy = 2.0 * zx * zy + (double)f.julia_cy;
