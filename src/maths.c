@@ -70,12 +70,12 @@ double	ft_atan(double x, double y)
 	if (x > 0)
 		return (y / x);
 	if (x < 0 && y >= 0)
-		return ((y / x) + 3.14159);
+		return ((y / x) + PI);
 	if (x < 0 && y < 0)
-		return ((y / x) - 3.14159);
+		return ((y / x) - PI);
 	if (x == 0 && y > 0)
-		return (1.5708);
+		return (PI / 2);
 	if (x == 0 && y < 0)
-		return (-1.5708);
+		return (-PI / 2);
 	return (0.0);
 }

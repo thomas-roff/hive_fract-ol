@@ -22,7 +22,6 @@ void	init_julia(t_fract *f, char **argv)
 	f->target_h = 4;
 	f->color_spread = 10;
 	f->color_shift = START_COLOR;
-	f->color_alpha = 0xFF;
 	f->window_w = WIDTH;
 	f->window_h = HEIGHT;
 	f->julia_angle = ft_atan(f->julia_cx, f->julia_cy);
@@ -42,15 +41,15 @@ void	rotate_julia(t_fract *f, char c)
 	f->redraw = TRUE;
 }
 
-void	draw_julia(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y)
+void	julia_pixel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y)
 {
 	double	zx;
 	double	zy;
 	double	temp_zx;
 	int		count;
 
-	zx = (double)pixel_x * (double)f.scale_x + (double)f.target_x;
-	zy = (double)pixel_y * (double)f.scale_y + (double)f.target_y;
+	zx = pixel_x * f.scale_x + f.target_x;
+	zy = pixel_y * f.scale_y + f.target_y;
 	count = 0;
 	while ((zx * zx + zy * zy < 4.0) && (count < MAX_COUNT))
 	{

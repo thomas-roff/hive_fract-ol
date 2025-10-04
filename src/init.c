@@ -40,7 +40,7 @@ int	parse_input(t_fract *f, int argc, char **argv)
 
 void	init_window(mlx_t **window, mlx_image_t **image)
 {
-	*window = mlx_init(WIDTH, HEIGHT, "Fract-ol", TRUE);
+	*window = mlx_init(WIDTH, HEIGHT, "Fract-ol", FALSE);
 	if (!window || !*window)
 		ft_error();
 	*image = mlx_new_image(*window, WIDTH, HEIGHT);

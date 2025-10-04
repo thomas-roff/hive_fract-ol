@@ -12,7 +12,7 @@
 
 # PROJECT NAME
 PROJECT		= fract-ol
-NAME		= fract-ol
+NAME		= fractol
 
 # PROJECT DIRECTORIES
 SRC_DIR		= src
@@ -34,12 +34,13 @@ OBJ		= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g
 MAKE_QUIET	= --no-print-directory
-SHELL_QUIET	= $(if $(DEBUG),,> /dev/null)
+SHELL_QUIET	= $(if $(DEBUG),,> /dev/null 2>&1)
 MAKE_LIB	= make -C
 CMAKE_LIB	= cmake
 
 # REMOVE
-RM		= rm -rf
+RMFILE = rm -f
+RMDIR = rm -rf
 
 # MAKE DIRECTORY
 MKDIR		= mkdir -p
@@ -50,9 +51,11 @@ LIBFT_H		= $(LIBFT_DIR)/libft.h
 LIBFT_A		= $(LIBFT_DIR)/libft.a
 
 # MLX42 LINKING
-MLX42_DIR	= ./MLX42
+MLX42_DIR	= MLX42
+MLX42_OBJ	= ./MLX42
 MLX42_H		= $(MLX42_DIR)/include/MLX42/MLX42.h
 MLX42_A		= $(MLX42_DIR)/build/libmlx42.a
+MLX42_CLONE	= git clone https://github.com/codam-coding-college/MLX42.git
 
 # INCLUDE PATHS AND LIBRARIES
 INC			= -I. -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX42_DIR)/include
@@ -72,9 +75,14 @@ $(NAME): $(OBJ) $(LIBFT_A) $(MLX42_A)
 	@echo "$(PROJECT) compiled"
 
 $(MLX42_A):
+	@if [ ! -d "$(MLX42_DIR)" ]; then \
+		echo "==== CLONING MLX42 =========="; \
+		$(MLX42_CLONE) $(SHELL_QUIET); \
+		echo "MLX42 cloned"; \
+	fi
 	@echo "==== BUILDING MLX42_FT ======"
-	@$(CMAKE_LIB) -S $(MLX42_DIR) -B $(MLX42_DIR)/build $(SHELL_QUIET)
-	@$(CMAKE_LIB) --build $(MLX42_DIR)/build -j4 $(SHELL_QUIET)
+	@$(CMAKE_LIB) -S $(MLX42_OBJ) -B $(MLX42_OBJ)/build $(SHELL_QUIET)
+	@$(CMAKE_LIB) --build $(MLX42_OBJ)/build -j4 $(SHELL_QUIET)
 	@echo "MLX42 compiled"
 
 $(LIBFT_A):
@@ -83,7 +91,7 @@ $(LIBFT_A):
 $(OBJ_DIR):
 	@$(MKDIR) $(OBJ_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER) $(LIBFT_H) | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER) $(LIBFT_A) $(MLX42_A) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 # <<<<<<< PHONY TARGETS >>>>>>>
@@ -96,15 +104,16 @@ finish:
 
 clean:
 	@echo "Removing object files"
-	@$(RM) $(OBJ)
+	@$(RMFILE) $(OBJ)
+	@$(RMDIR) $(OBJ_DIR)
 	@$(MAKE_LIB) libft clean $(MAKE_QUIET)
-	@$(CMAKE_LIB) --build $(MLX42_DIR)/build --target clean $(SHELL_QUIET)
+	@$(CMAKE_LIB) --build $(MLX42_OBJ)/build --target clean $(SHELL_QUIET)
 
 fclean: clean
 	@echo "Removing static library files"
-	@$(RM) $(NAME)
+	@$(RMFILE) $(NAME)
 	@$(MAKE_LIB) libft fclean $(MAKE_QUIET)
-	@$(RM) $(MLX42_DIR)/build
+	@$(RMDIR) $(MLX42_DIR)
 
 re: fclean all
 

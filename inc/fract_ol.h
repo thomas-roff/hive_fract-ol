@@ -37,6 +37,14 @@
 # define COLOR_MAX 256
 // START COLOUR (GREEN = 0, RED = 512, BLUE = 1024)
 # define START_COLOR 1024
+// PI TO 6 DIGITS
+# define PI 3.14159
+// RGBA VALUE FOR OPAQUE BLACK
+# define BLACK 0x000000FF
+// RGBA ALPHA CHANNEL (0xFF SETS TO OPAQUE)
+# define ALPHA 0xFF
+// ZOOM SCALE FACTOR
+# define ZOOM_SCALE_FACTOR 0.9
 
 // FRACT-OL
 typedef struct s_fract
@@ -58,7 +66,6 @@ typedef struct s_fract
 	int			window_w;
 	int			color_shift;
 	int			color_spread;
-	int			color_alpha;
 	uint32_t	color;
 	int			redraw;
 }	t_fract;
@@ -100,12 +107,12 @@ int		color_pixel(t_fract f, int count);
 
 // MANDELBROT
 void	init_mandel(t_fract *f);
-void	draw_mandel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
+void	mandel_pixel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
 
 // JULIA
 void	rotate_julia(t_fract *f, char c);
 void	init_julia(t_fract *f, char **argv);
-void	draw_julia(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
+void	julia_pixel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
 
 // FT_ATOF
 int		ft_power(int base, int exponent);

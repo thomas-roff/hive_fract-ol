@@ -33,16 +33,14 @@ int	color_pixel(t_fract f, int count)
 	int			color_picker;
 	uint32_t	color;
 
-	color = 0x000000FF;
-	if (f.type == 'm' && (count == 0 || count >= MAX_COUNT))
-		return (color);
-	if (f.type == 'j' && count >= MAX_COUNT)
+	color = BLACK;
+	if (count >= MAX_COUNT)
 		return (color);
 	color_picker = (count * f.color_spread + f.color_shift);
 	red = get_color_channel(color_picker);
 	green = get_color_channel(color_picker + (COLOR_MAX * 2));
 	blue = get_color_channel(color_picker + (COLOR_MAX * 4));
-	color = red << 24 | green << 16 | blue << 8 | f.color_alpha;
+	color = red << 24 | green << 16 | blue << 8 | ALPHA;
 	return (color);
 }
 
@@ -50,17 +48,9 @@ void	color_change(t_fract *f, char c)
 {
 	if (c == 'c')
 		f->color_shift += 3;
-	if (c == ',')
-	{
+	if (c == ',' && f->color_spread > 2)
 		f->color_spread -= 1;
-		if (f->color_spread < 2)
-			f->color_spread = 2;
-	}
-	if (c == '.')
-	{
+	if (c == '.' && f->color_spread < 50)
 		f->color_spread += 1;
-		if (f->color_spread > 50)
-			f->color_spread = 50;
-	}
 	f->redraw = TRUE;
 }

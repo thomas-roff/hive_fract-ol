@@ -62,8 +62,8 @@ void	input_prompt(void)
 	ft_putendl_fd("For the Julia set pass \"j\", \"J\", \"julia\",", 1);
 	ft_putendl_fd("or \"Julia\" as the first argument PLUS", 1);
 	ft_putendl_fd("2 float values (best results between", 1);
-	ft_putendl_fd("-1.0 and 1.0) for for the constant in", 1);
-	ft_putendl_fd("the order c-real, c-imaginary.", 1);
+	ft_putendl_fd("-1.0 and 1.0) for the constant in the", 1);
+	ft_putendl_fd("order c-real, c-imaginary.", 1);
 	ft_putendl_fd("e.g. \"./fract-ol julia 0.1 -0.7\"", 1);
 	ft_putendl_fd("", 1);
 	ft_putendl_fd("For help with controls use the argument:", 1);

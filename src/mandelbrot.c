@@ -20,7 +20,6 @@ void	init_mandel(t_fract *f)
 	f->target_h = 4;
 	f->color_spread = 10;
 	f->color_shift = START_COLOR;
-	f->color_alpha = 0xFF;
 	f->window_w = WIDTH;
 	f->window_h = HEIGHT;
 	f->julia_cx = 0;
@@ -30,13 +29,13 @@ void	init_mandel(t_fract *f)
 	f->redraw = FALSE;
 }
 
-void	draw_mandel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y)
+void	mandel_pixel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y)
 {
 	t_mandel	m;
 	int			count;
 
-	m.cx = (double)pixel_x * (double)f.scale_x + (double)f.target_x;
-	m.cy = (double)pixel_y * (double)f.scale_y + (double)f.target_y;
+	m.cx = pixel_x * f.scale_x + f.target_x;
+	m.cy = pixel_y * f.scale_y + f.target_y;
 	m.zx = 0.0;
 	m.zy = 0.0;
 	count = 0;

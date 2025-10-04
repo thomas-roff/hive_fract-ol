@@ -77,9 +77,9 @@ void	scrolling(double xdelta, double ydelta, void *params)
 	old_centerx = f->target_x + f->target_w / 2;
 	old_centery = f->target_y + f->target_h / 2;
 	if (ydelta > 0)
-		zoom_image(f, 0.9);
+		zoom_image(f, ZOOM_SCALE_FACTOR);
 	else if (ydelta < 0)
-		zoom_image(f, 1.1111111);
+		zoom_image(f, 1.0 / ZOOM_SCALE_FACTOR);
 	else
 		return ;
 	f->target_x = old_centerx - (f->target_w / 2);
@@ -91,10 +91,8 @@ void	draw_image(t_fract f)
 {
 	int	x;
 	int	y;
-	int	count;
 
 	y = 1;
-	count = 0;
 	f.scale_x = f.target_w / (float)f.window_w;
 	f.scale_y = f.target_h / (float)f.window_h;
 	while (y < f.window_h)
@@ -103,9 +101,9 @@ void	draw_image(t_fract f)
 		while (x < f.window_w)
 		{
 			if (f.type == 'm')
-				draw_mandel(f, f.image, x, y);
+				mandel_pixel(f, f.image, x, y);
 			else if (f.type == 'j')
-				draw_julia(f, f.image, x, y);
+				julia_pixel(f, f.image, x, y);
 			x++;
 		}
 		y++;
