@@ -30,7 +30,8 @@ int	parse_input(t_fract *f, int argc, char **argv)
 	{
 		flag = OK;
 		f->type = 'j';
-		if (argc != 4 || !ft_naf(argv[2]) || !ft_naf(argv[3]))
+		if (argc != 4 || !ft_atof(argv[2], &f->julia_cx)
+			|| !ft_atof(argv[3], &f->julia_cy))
 			return (KO);
 	}
 	else if (!ft_strcmp(argv[1], "-help"))

@@ -11,12 +11,9 @@
 /* ************************************************************************** */
 
 #include "../inc/fract_ol.h"
-#include <stdio.h>
 
-void	init_julia(t_fract *f, char **argv)
+void	init_julia(t_fract *f)
 {
-	f->julia_cx = ft_atof(argv[2]);
-	f->julia_cy = ft_atof(argv[3]);
 	f->target_x = -2;
 	f->target_y = -2;
 	f->target_w = 4;
@@ -34,14 +31,15 @@ void	init_julia(t_fract *f, char **argv)
 void	rotate_julia(t_fract *f, char c)
 {
 	if (c == 'l')
-	{
-		f->julia_angle += 0.01;
-	}
+		f->julia_angle += (PI / 300);
 	if (c == 'r')
-		f->julia_angle -= 0.01;
+		f->julia_angle -= (PI / 300);
+	if (f->julia_angle > 2 * PI)
+		f->julia_angle -= 2 * PI;
+	if (f->julia_angle < 0)
+		f->julia_angle += 2 * PI;
 	f->julia_cx = f->julia_radius * ft_cos(f->julia_angle);
 	f->julia_cy = f->julia_radius * ft_sin(f->julia_angle);
-	printf("Angle %f\n", f->julia_angle);
 	f->redraw = TRUE;
 }
 

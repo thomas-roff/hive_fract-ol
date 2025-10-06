@@ -56,7 +56,7 @@ void	input_prompt(void)
 	ft_putendl_fd("For the Mandelbrot set pass \"m\", \"M\",", 1);
 	ft_putendl_fd("\"mandelbrot\" or \"Mandelbrot\" as an", 1);
 	ft_putendl_fd("argument.", 1);
-	ft_putendl_fd("e.g. \"./fract-ol m\"", 1);
+	ft_putendl_fd("e.g. \"./fractol m\"", 1);
 	ft_putendl_fd("", 1);
 	ft_putendl_fd("JULIA", 1);
 	ft_putendl_fd("For the Julia set pass \"j\", \"J\", \"julia\",", 1);
@@ -64,10 +64,10 @@ void	input_prompt(void)
 	ft_putendl_fd("2 float values (best results between", 1);
 	ft_putendl_fd("-1.0 and 1.0) for the constant in the", 1);
 	ft_putendl_fd("order c-real, c-imaginary.", 1);
-	ft_putendl_fd("e.g. \"./fract-ol julia 0.1 -0.7\"", 1);
+	ft_putendl_fd("e.g. \"./fractol julia 0.1 -0.7\"", 1);
 	ft_putendl_fd("", 1);
 	ft_putendl_fd("For help with controls use the argument:", 1);
-	ft_putendl_fd("\"-help\". e.g. \"./fract-ol -help\"", 1);
+	ft_putendl_fd("\"-help\". e.g. \"./fractol -help\"", 1);
 	ft_putendl_fd("", 1);
 	exit(EXIT_FAILURE);
 }

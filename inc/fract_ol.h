@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
 # include <stdint.h>
+# include <float.h>
 
 // SUCCESSFUL EXECUTION
 # define OK 1
@@ -79,12 +80,11 @@ typedef struct s_mandel
 	double	temp_zx;
 }	t_mandel;
 
-typedef struct s_julia
+typedef struct s_float
 {
-	double	zx;
-	double	zy;
-	double	temp_zx;
-}	t_julia;
+	float	whole;
+	float	dec;
+}	t_float;
 
 // MAIN FUNCTIONS
 int		main(int argc, char **argv);
@@ -111,13 +111,15 @@ void	mandel_pixel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
 
 // JULIA
 void	rotate_julia(t_fract *f, char c);
-void	init_julia(t_fract *f, char **argv);
+void	init_julia(t_fract *f);
 void	julia_pixel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y);
 
 // FT_ATOF
 int		ft_power(int base, int exponent);
+int		ft_issign(int c);
 int		ft_naf(const char *nptr);
-float	ft_atof(const char *nptr);
+int		ft_big_atof(const char *nptr, float *nbr);
+int		ft_atof(const char *nptr, float	*nbr);
 
 // MATHEMATIC FUNCTIONS
 double	ft_sin(double x);

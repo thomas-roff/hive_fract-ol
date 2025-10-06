@@ -48,6 +48,8 @@ void	color_change(t_fract *f, char c)
 {
 	if (c == 'c')
 		f->color_shift += 3;
+	if (f->color_shift > COLOR_WHEEL)
+		f->color_shift -= COLOR_WHEEL;
 	if (c == ',' && f->color_spread > 2)
 		f->color_spread -= 1;
 	if (c == '.' && f->color_spread < 50)

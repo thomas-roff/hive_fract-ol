@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 		if (f.type == 'm')
 			init_mandel(&f);
 		else if (f.type == 'j')
-			init_julia(&f, argv);
+			init_julia(&f);
 		init_window(&f.window, &f.image);
 		mlx_loop_hook(f.window, commands, &f);
 		mlx_scroll_hook(f.window, scrolling, &f);

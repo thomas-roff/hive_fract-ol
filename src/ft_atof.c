@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/fract_ol.h"
-#include <float.h>
 
 int	ft_power(int base, int exponent)
 {
@@ -32,35 +31,14 @@ int	ft_issign(int c)
 	return (0);
 }
 
-int	ft_floatmaxcheck(const char *nptr)
-{
-	double	res;
-	int		digit;
-
-	res = 0.0;
-	while (ft_isspace((int)*nptr))
-		nptr++;
-	if (ft_issign((int)*nptr))
-		nptr++;
-	while (ft_isdigit((int)*nptr))
-	{
-		digit = *nptr - '0';
-		res = res * 10 + digit;
-		if (res > FLT_MAX)
-			return (FALSE);
-		nptr++;
-	}
-	return (TRUE);
-}
-
 int	ft_naf(const char *nptr)
 {
-	if (!ft_floatmaxcheck(nptr))
-		return (FALSE);
 	while (ft_isspace(*nptr))
 		nptr++;
 	if (ft_issign(*nptr))
 		nptr++;
+	if (!ft_isdigit(*nptr) && *nptr != '.')
+		return (FALSE);
 	while (ft_isdigit(*nptr))
 		nptr++;
 	if (*nptr == '.')
@@ -75,57 +53,55 @@ int	ft_naf(const char *nptr)
 		return (TRUE);
 }
 
-float	ft_big_atof(const char *nptr)
+int	ft_big_atof(const char *nptr, float *nbr)
 {
 	double	res;
 	int		digit;
-	int		sign;
 
 	res = 0.0;
-	sign = 1;
+	if (!ft_naf(nptr))
+		return (KO);
 	while (ft_isspace((int)*nptr))
 		nptr++;
 	if (ft_issign((int)*nptr))
+		nptr++;
+	while (ft_isdigit((int)*nptr))
+	{
+		digit = *nptr - '0';
+		res = res * 10 + (double)digit;
+		if (res > FLT_MAX)
+			return (KO);
+		nptr++;
+	}
+	*nbr = (float)res;
+	return (OK);
+}
+
+int	ft_atof(const char *nptr, float	*nbr)
+{
+	t_float	fl;
+	int		i;
+	int		sign;
+
+	if (!ft_big_atof(nptr, &fl.whole))
+		return (KO);
+	fl.dec = 0.0f;
+	i = 0;
+	sign = 1;
+	while (ft_isspace((int)*nptr))
+		nptr++;
+	if (ft_issign(*nptr))
 	{
 		if (*nptr == '-')
 			sign *= -1;
 		nptr++;
 	}
 	while (ft_isdigit((int)*nptr))
-	{
-		digit = *nptr - '0';
-		res = res * 10 + digit;
-		if (res > FLT_MAX)
-			return (0.0);
 		nptr++;
-	}
-	return ((float)res * (float)sign);
-}
-
-float	ft_atof(const char *nptr)
-{
-	float	res;
-	float	decimal;
-	int		i;
-	int		j;
-
-	res = ft_big_atof(nptr);
-	decimal = 0.0f;
-	i = 0;
-	j = 0;
-	while (ft_isspace((int)nptr[i]))
-		i++;
-	while (ft_isnum((int)nptr[i]))
-		i++;
-	if (nptr[i] == '.' && ft_isdigit((int)nptr[i + 1]))
-		i++;
-	else
-		return (res);
-	while (ft_isdigit((int)nptr[i + j]))
-		decimal = (decimal * 10) + (nptr[i + j++] - '0');
-	decimal /= ft_power(10, j);
-	if (res < 0)
-		decimal *= (float)-1.0;
-	res += decimal;
-	return (res);
+	if (*nptr == '.' && ft_isdigit((int)*(nptr + 1)))
+		nptr++;
+	while (ft_isdigit((int)nptr[i]))
+		fl.dec = (fl.dec * 10) + (nptr[i++] - '0');
+	*nbr = ((float)fl.whole + (fl.dec / (float)ft_power(10, i))) * (float)sign;
+	return (OK);
 }
