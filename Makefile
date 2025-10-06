@@ -67,12 +67,14 @@ LIBS		= $(LIBFT) $(MLX42) $(GLFW_42)
 
 # <<<<<<< MAIN TARGETS >>>>>>>
 
-all: start $(NAME) finish
+all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_A) $(MLX42_A)
+	@echo "==== THOMASROFF MAKEFILE ===="
 	@echo "==== BUILDING $(PROJECT) ======"
 	@$(CC) $(CFLAGS) $(INC) $(OBJ) $(LIBS) -o $(NAME)
 	@echo "$(PROJECT) compiled"
+	@echo "==== BUILD COMPLETE ========="
 
 $(MLX42_A):
 	@if [ ! -d "$(MLX42_DIR)" ]; then \
@@ -91,16 +93,12 @@ $(LIBFT_A):
 $(OBJ_DIR):
 	@$(MKDIR) $(OBJ_DIR)
 
+.SECONDARY: $(OBJ)
+
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER) $(LIBFT_A) $(MLX42_A) | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 # <<<<<<< PHONY TARGETS >>>>>>>
-
-start:
-	@echo "==== THOMASROFF MAKEFILE ===="
-
-finish:
-	@echo "==== BUILD COMPLETE ========="
 
 clean:
 	@echo "Removing object files"
@@ -117,4 +115,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all start finish clean fclean re
+.PHONY: all clean fclean re
