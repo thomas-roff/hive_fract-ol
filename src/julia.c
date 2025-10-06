@@ -50,8 +50,8 @@ void	julia_pixel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y)
 	double	temp_zx;
 	int		count;
 
-	zx = pixel_x * f.scale_x + f.target_x;
-	zy = pixel_y * f.scale_y + f.target_y;
+	zx = (double)pixel_x * f.scale_x + f.target_x;
+	zy = (double)pixel_y * f.scale_y + f.target_y;
 	count = 0;
 	while ((zx * zx + zy * zy < 4.0) && (count < MAX_COUNT))
 	{

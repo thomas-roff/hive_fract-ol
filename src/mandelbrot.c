@@ -34,8 +34,8 @@ void	mandel_pixel(t_fract f, mlx_image_t *image, int pixel_x, int pixel_y)
 	t_mandel	m;
 	int			count;
 
-	m.cx = pixel_x * f.scale_x + f.target_x;
-	m.cy = pixel_y * f.scale_y + f.target_y;
+	m.cx = (double)pixel_x * f.scale_x + f.target_x;
+	m.cy = (double)pixel_y * f.scale_y + f.target_y;
 	m.zx = 0.0;
 	m.zy = 0.0;
 	count = 0;
