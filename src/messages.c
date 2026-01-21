@@ -21,7 +21,7 @@ void	ft_error(void)
 void	input_helper(void)
 {
 	ft_putendl_fd("========================================", 1);
-	ft_putendl_fd("|         OSCAR_ROFF FRACT-OL          |", 1);
+	ft_putendl_fd("|         OSCAR ROFF FRACT-OL          |", 1);
 	ft_putendl_fd("========================================", 1);
 	ft_putendl_fd("", 1);
 	ft_putendl_fd("NAVIGATION", 1);
@@ -46,7 +46,7 @@ void	input_helper(void)
 void	input_prompt(void)
 {
 	ft_putendl_fd("========================================", 1);
-	ft_putendl_fd("|         OSCAR_ROFF FRACT-OL          |", 1);
+	ft_putendl_fd("|         OSCAR ROFF FRACT-OL          |", 1);
 	ft_putendl_fd("========================================", 1);
 	ft_putendl_fd("", 1);
 	ft_putendl_fd("Please specify which fractal set you", 1);
